@@ -1,7 +1,7 @@
 <html>
 
 <head>
-	<title>Pomodoro</title>
+	<title>Pomodoro Timer</title>
 	<link type="text/css" href="assets/main.css" rel="stylesheet">
 	<link type="text/css" href="assets/simplegrid.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="assets/buttons/default.css" />
@@ -14,20 +14,18 @@
 <body>
 	<div class="grid">
 		<div class="col-1-1">
-			<h3 id="header">Pomodoro Timer</h3>
+			<h3 id="header">Pomodoro</h3>
 		</div>
-	</div>
-	<div class="grid">
 		<div class="col-1-1 timer">
 			<span id="timerOutput"></span>
 		</div>
-	</div>
-	<div class="grid">
-		<div class="col-1-1 timer">
-			<button id="myicon" onclick="start(300)" class="btn btn-7 btn-7d btn-icon-only icon-mug"></button>
-			<button id="myicon" onclick="start(1500)" class="btn btn-7 btn-7d btn-icon-only icon-stopwatch"></button>
-			<button id="myicon" onclick="start(900)" class="btn btn-7 btn-7d btn-icon-only icon-dribble"></button>
-		</div>
+		<div class="col-1-1">
+            <div class="content action-buttons">
+			    <button id="myicon" onclick="start(300)" class="btn btn-7 btn-7d btn-icon-only icon-mug"></button>
+			    <button id="myicon" onclick="start(1500)" class="btn btn-7 btn-7d btn-icon-only icon-stopwatch"></button>
+			    <button id="myicon" onclick="start(900)" class="btn btn-7 btn-7d btn-icon-only icon-dribble"></button>
+            </div>
+        </div>
 	</div>
 </body>
 
@@ -62,6 +60,11 @@
         return output;
     }
 
+    function setText(value) {
+        document.getElementById('timerOutput').innerHTML =
+            format(value);
+    }
+
     function start(startTime) {
         totalSeconds = startTime;
         if (interval) {
@@ -69,14 +72,24 @@
         }
 
         interval = setInterval(function() {
-            document.getElementById('timerOutput').innerHTML = format(totalSeconds);
-            totalSeconds -= 1;
-
-            if (totalSeconds < 0) {
+            if (totalSeconds <= 0) {
                 clearInterval(interval);
+                new Notification(
+                    'Pomodoro Timer',
+                    {
+                        title: "Basic Notification",
+                        body: "Your time is up!"
+                    });
+            } else {
+                totalSeconds -= 1;
+                setText(totalSeconds);
             }
         }, 10)
+
+        setText(startTime);
     }
+
+    setText(1500);
 </script>
 
 </html>
