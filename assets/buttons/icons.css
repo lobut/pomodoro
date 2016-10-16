@@ -1,0 +1,31 @@
+.icon-stopwatch:before {
+  content: "\e952";
+}
+
+.icon-stats-dots:before {
+  content: "\e99b";
+}
+
+.icon-mug:before {
+  content: "\e9a2";
+}
+
+.icon-dribble:before {
+  content: "\eaa7";
+}
+
+.icon-tux:before {
+  content: "\eabd";
+}
+
+.icon-appleinc:before {
+  content: "\eabe";
+}
+
+.icon-android:before {
+  content: "\eac0";
+}
+
+.icon-windows8:before {
+  content: "\eac2";
+}

@@ -1,0 +1,82 @@
+<html>
+
+<head>
+	<title>Pomodoro</title>
+	<link type="text/css" href="assets/main.css" rel="stylesheet">
+	<link type="text/css" href="assets/simplegrid.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="assets/buttons/default.css" />
+	<link rel="stylesheet" type="text/css" href="assets/buttons/component.css" />
+	<link rel="stylesheet" type="text/css" href="assets/buttons/icons.css" />
+	<script src="assets/buttons/modernizr.min.js"></script>
+	<script src="assets/buttons/classie.js"></script>
+</head>
+
+<body>
+	<div class="grid">
+		<div class="col-1-1">
+			<h3 id="header">Pomodoro Timer</h3>
+		</div>
+	</div>
+	<div class="grid">
+		<div class="col-1-1 timer">
+			<span id="timerOutput"></span>
+		</div>
+	</div>
+	<div class="grid">
+		<div class="col-1-1 timer">
+			<button id="myicon" onclick="start(300)" class="btn btn-7 btn-7d btn-icon-only icon-mug"></button>
+			<button id="myicon" onclick="start(1500)" class="btn btn-7 btn-7d btn-icon-only icon-stopwatch"></button>
+			<button id="myicon" onclick="start(900)" class="btn btn-7 btn-7d btn-icon-only icon-dribble"></button>
+		</div>
+	</div>
+</body>
+
+<script>
+    var totalSeconds = 1500;
+    var interval;
+    var buttons7Click = Array.prototype.slice.call( document.querySelectorAll( '#myicon' ) ),
+        totalButtons7Click = buttons7Click.length;
+
+    buttons7Click.forEach( function( el, i ) { el.addEventListener( 'click', activate, false ); } );
+
+    function activate() {
+        var self = this, activatedClass = 'btn-activated';
+
+        if( !classie.has( this, activatedClass ) ) {
+            classie.add( this, activatedClass );
+            setTimeout( function() { classie.remove( self, activatedClass ) }, 500 );
+        }
+    }
+
+    function format(seconds) {
+        var minutes = Math.floor(seconds / 60);
+        var seconds = seconds % 60;
+        var output = minutes + ':';
+
+        if (seconds < 10) {
+            output += '0';
+        }
+
+        output += seconds;
+
+        return output;
+    }
+
+    function start(startTime) {
+        totalSeconds = startTime;
+        if (interval) {
+            clearInterval(interval);
+        }
+
+        interval = setInterval(function() {
+            document.getElementById('timerOutput').innerHTML = format(totalSeconds);
+            totalSeconds -= 1;
+
+            if (totalSeconds < 0) {
+                clearInterval(interval);
+            }
+        }, 10)
+    }
+</script>
+
+</html>
